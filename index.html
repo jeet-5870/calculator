@@ -45,6 +45,13 @@
   <script>
   function calculate() {
     let screen = document.getElementById('screen');
+    if (/[\+\-\*\/]$/.test(screen.value)) {
+        screen.value = "Error";
+        return;
+    }
+    let expression = screen.value.replace(/(\d+)%/g, "($1/100)");
+
+
     try {
       screen.value = parseFloat(eval(expression)).toFixed(10).replace(/\.?0+$/, '');
     } catch (e) {
@@ -52,15 +59,21 @@
     }
   }
 
-  function convertPercentage(){
-    let screen=document.getElementById('screen');
-    screen.value = screen.value.replace(/(\d+)$/, "($1/100)");
-  }
-
   function backspace() {
     let screen = document.getElementById('screen');
     screen.value = screen.value.slice(0, -1);
   }
+
+  function convertPercentage() {
+    let screen = document.getElementById('screen');
+    let value = parseFloat(screen.value);
+
+    if (!isNaN(value)) {
+        screen.value = (value / 100).toFixed(10).replace(/\.?0+$/, '');
+    } else {
+        screen.value = "Error";
+    }
+}
 </script>
 </body>
 </html>
