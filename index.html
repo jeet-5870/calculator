@@ -7,41 +7,42 @@
   <title>Calculator</title>
 </head>
 <body>
-<div class="calculator">
-  <div >
-    <input type="text" class="screen" id="screen" readonly>
+  <div class="calculator">
+    <div >
+      <input type="text" class="screen" id="screen" readonly>
+    </div>
+    <div>
+      <button onclick="document.getElementById('screen').value = ''">C</button>
+      <button onclick="backspace()">⌫</button>
+      <button onclick="convertPercentage()">%</button>
+      <button onclick="addOperator('/')">÷</button>
+    </div>
+    <div>
+      <button onclick="document.getElementById('screen').value += '7' ">7</button>
+      <button onclick="document.getElementById('screen').value += '8' ">8</button>
+      <button onclick="document.getElementById('screen').value += '9' ">9</button>
+      <button onclick="addOperator('*')">×</button>
+    </div>
+    <div>
+      <button onclick="document.getElementById('screen').value += '4' ">4</button>
+      <button onclick="document.getElementById('screen').value += '5' ">5</button>
+      <button onclick="document.getElementById('screen').value += '6' ">6</button>
+      <button onclick="addOperator('-')">-</button>
+    </div>
+    <div>
+      <button onclick="document.getElementById('screen').value += '1'">1</button>
+      <button onclick="document.getElementById('screen').value += '2'">2</button>
+      <button onclick="document.getElementById('screen').value += '3'">3</button>
+      <button onclick="addOperator('+')">+</button>
+    </div>
+    <div>
+      <button onclick="addDecimal()">.</button>
+      <button onclick="document.getElementById('screen').value += '0'">0</button>
+      <button onclick="calculate()">=</button>
+    </div>
   </div>
-  <div>
-    <button onclick="document.getElementById('screen').value = ''">C</button>
-    <button onclick="backspace()">⌫</button>
-    <button onclick="convertPercentage()">%</button>
-    <button onclick="document.getElementById('screen').value +=
-    '/' ">÷</button>
-  </div>
-  <div>
-    <button onclick="document.getElementById('screen').value += '7' ">7</button>
-    <button onclick="document.getElementById('screen').value += '8' ">8</button>
-    <button onclick="document.getElementById('screen').value += '9' ">9</button>
-    <button onclick="document.getElementById('screen').value += '*'">×</button>
-  </div>
-  <div>
-    <button onclick="document.getElementById('screen').value += '4' ">4</button>
-    <button onclick="document.getElementById('screen').value += '5' ">5</button>
-    <button onclick="document.getElementById('screen').value += '6' ">6</button>
-    <button onclick="document.getElementById('screen').value += '-'">-</button>
-  </div>
-  <div>
-    <button onclick="document.getElementById('screen').value += '1'">1</button>
-    <button onclick="document.getElementById('screen').value += '2'">2</button>
-    <button onclick="document.getElementById('screen').value += '3'">3</button>
-    <button onclick="document.getElementById('screen').value += '+'">+</button>
-  </div>
-  <div>
-    <button onclick="document.getElementById('screen').value += '.'">.</button>
-    <button onclick="document.getElementById('screen').value += '0'">0</button>
-    <button onclick="calculate()">=</button>
-  </div>
-  </div>
+
+  <!-- All function to calculate -->
   <script>
   function calculate() {
     let screen = document.getElementById('screen');
@@ -73,7 +74,30 @@
     } else {
         screen.value = "Error";
     }
+  }
+
+  function addOperator(operator) {
+    let screen = document.getElementById('screen');
+    let lastChar = screen.value.slice(-1);
+
+    if (/[\+\-\*\/]/.test(lastChar)) {
+        screen.value = screen.value.slice(0, -1) + operator;
+    } else {
+        screen.value += operator;
+    }
 }
+
+    function addDecimal() {
+        let screen = document.getElementById('screen');
+        let lastChar = screen.value.slice(-1);
+
+        if (screen.value === '' || /[\+\-\*\/]/.test(lastChar)) {
+            screen.value += '0.';
+        } else if (!screen.value.split(/[\+\-\*\/]/).pop().includes('.')) {
+            screen.value += '.';
+        }
+    }
+
 </script>
 </body>
 </html>
